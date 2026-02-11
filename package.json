@@ -9,7 +9,6 @@
     "homepage": "https://kaetram.com/",
     "license": "MPL-2.0",
     "scripts": {
-        "postinstall": "husky install",
         "packages": "FORCE_COLOR=true yarn workspaces foreach --no-private -j 4 -piv run",
         "dev": "yarn packages dev",
         "hub": "yarn packages hub",
@@ -45,7 +44,6 @@
         "eslint-plugin-prefer-let": "^3.0.1",
         "eslint-plugin-prettier": "^5.0.0",
         "eslint-plugin-unicorn": "^48.0.1",
-        "husky": "^8.0.3",
         "lint-staged": "^14.0.1",
         "postcss": "^8.4.29",
         "postcss-custom-media": "^10.0.0",
