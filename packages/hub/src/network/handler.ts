@@ -5,7 +5,7 @@ import config from '@kaetram/common/config';
 import Utils from '@kaetram/common/util/utils';
 import { App, DEDICATED_COMPRESSOR_3KB } from 'uws';
 
-import type { WebSocket } from 'uws';
+import type { WebSocket, us_listen_socket } from 'uws';
 import type { ConnectionInfo } from '@kaetram/common/types/network';
 
 /**
@@ -33,7 +33,7 @@ export default class Handler {
                 message: this.handleMessage.bind(this),
                 close: this.handleClose.bind(this)
             })
-            .listen(config.hubWsPort, (socket: WebSocket<ConnectionInfo>) => {
+            .listen(config.hubWsPort, (socket: us_listen_socket | false) => {
                 if (!socket) throw new Error(`Failed to listen on port ${config.hubWsPort}`);
 
                 this.ready = true;
