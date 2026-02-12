@@ -157,6 +157,9 @@ export default class App {
 
         // Set the checkmark for remember me to true.
         this.rememberMe.checked = true;
+
+        // Auto-login if credentials are available.
+        if (this.storage.getUsername() && this.storage.getPassword()) this.login();
     }
 
     /**

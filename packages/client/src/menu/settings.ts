@@ -25,6 +25,7 @@ export default class Settings extends Menu {
     private disableCachingCheckbox: HTMLInputElement = document.querySelector(
         '#disable-region-caching-checkbox > input'
     )!;
+    private logoutButton: HTMLButtonElement = document.querySelector('#logout-button')!;
 
     public constructor(private game: Game) {
         super('#settings-page', undefined, '#settings-button');
@@ -39,6 +40,7 @@ export default class Settings extends Menu {
         this.showNamesCheckbox.addEventListener('change', this.handleName.bind(this));
         this.showLevelsCheckbox.addEventListener('change', this.handleLevel.bind(this));
         this.disableCachingCheckbox.addEventListener('change', this.handleCaching.bind(this));
+        this.logoutButton.addEventListener('click', this.handleLogout.bind(this));
 
         this.load();
     }
@@ -165,5 +167,16 @@ export default class Settings extends Menu {
 
     private handleCaching(): void {
         this.game.storage.setDisableCaching(this.disableCachingCheckbox.checked);
+    }
+
+    /**
+     * Clears remember me credentials and reloads to return to the login screen.
+     */
+
+    private handleLogout(): void {
+        this.game.storage.setRemember(false);
+        this.game.storage.setCredentials();
+
+        location.reload();
     }
 }
