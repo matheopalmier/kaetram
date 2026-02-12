@@ -210,7 +210,7 @@ export default class Messages {
             }
 
             case 'maintenance': {
-                this.app.sendError('Kaetram is currently under maintenance.');
+                this.app.sendError('Shefira is currently under maintenance.');
                 break;
             }
 

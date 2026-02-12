@@ -67,10 +67,10 @@ export default defineConfig(async ({ mode }) => {
             glsl(),
             VitePWA({
                 registerType: 'autoUpdate',
-                workbox: { cacheId: name },
+                workbox: { cacheId: 'shefira' },
                 manifest: {
-                    name: config.name,
-                    short_name: config.name,
+                    name: 'Shefira',
+                    short_name: 'Shefira',
                     description,
                     display: 'fullscreen',
                     background_color: '#000000',

@@ -3509,7 +3509,7 @@ __metadata:
     nodemon: "npm:^2.0.19"
     tsx: "npm:^3.12.6"
     typescript: "npm:^5.0.2"
-    uws: "https://github.com/uNetworking/uWebSockets.js.git#commit=42c9c0d5d31f46ca4115dc75672b0037ec970f28"
+    uws: "https://github.com/uNetworking/uWebSockets.js.git#v20.57.0"
   languageName: unknown
   linkType: soft
 
@@ -3538,7 +3538,7 @@ __metadata:
     tslib: "npm:^2.4.0"
     tsx: "npm:^3.12.6"
     typescript: "npm:^5.0.4"
-    uws: "https://github.com/uNetworking/uWebSockets.js.git#commit=42c9c0d5d31f46ca4115dc75672b0037ec970f28"
+    uws: "https://github.com/uNetworking/uWebSockets.js.git#v20.57.0"
     websocket: "npm:^1.0.34"
   languageName: unknown
   linkType: soft
@@ -8203,15 +8203,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"husky@npm:^8.0.3":
-  version: 8.0.3
-  resolution: "husky@npm:8.0.3"
-  bin:
-    husky: lib/bin.js
-  checksum: 016ab53f21f39af1b2387559faa9cb6e2bbbe6d3cccd64c186efe204ca4634fc11dca369da9aabe7cde4293573abe12f9b7251f20bef39ea33d8e1e8f0847550
-  languageName: node
-  linkType: hard
-
 "iconv-lite@npm:0.4.24":
   version: 0.4.24
   resolution: "iconv-lite@npm:0.4.24"
@@ -9029,7 +9020,6 @@ __metadata:
     eslint-plugin-prefer-let: "npm:^3.0.1"
     eslint-plugin-prettier: "npm:^4.2.1"
     eslint-plugin-unicorn: "npm:^45.0.2"
-    husky: "npm:^8.0.3"
     lint-staged: "npm:^13.1.0"
     postcss: "npm:^8.4.20"
     postcss-assets: "npm:^6.0.0"
@@ -13381,10 +13371,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uws@https://github.com/uNetworking/uWebSockets.js.git#commit=42c9c0d5d31f46ca4115dc75672b0037ec970f28":
-  version: 20.19.0
-  resolution: "uws@https://github.com/uNetworking/uWebSockets.js.git#commit=42c9c0d5d31f46ca4115dc75672b0037ec970f28"
-  checksum: 0cf603491df40f9e041672ba51b34aaff1a1bec6cc087dbbd363435ed07c9436fdbf6e4f4cb5b143133a9f232670b9a52e3b5befc2f05350c843945c4f8feee1
+"uws@https://github.com/uNetworking/uWebSockets.js.git#v20.57.0":
+  version: 20.57.0
+  resolution: "uws@https://github.com/uNetworking/uWebSockets.js.git#commit=fcfc622a4286909593b7f390056d89e0ca3b56b9"
+  checksum: e88705d57157c8deac8733c0a46cb29a3c5f0eb30770299cc9a0dd8c93fba60cbc3821ec6ffbb20a639455ca9832ada85d7374a97c3b140fc4de2e38872ae929
   languageName: node
   linkType: hard
 

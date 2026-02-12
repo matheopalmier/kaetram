@@ -407,7 +407,7 @@ export default class App {
 
         // Display new version changelogs.
         if (this.storage.newVersion) {
-            title.textContent = `Kaetram ${this.config.version} Changelog`;
+            title.textContent = `Shefira ${this.config.version} Changelog`;
 
             let changes = Updates[this.config.version as keyof typeof Updates];
 
