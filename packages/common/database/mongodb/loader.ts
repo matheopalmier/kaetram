@@ -31,15 +31,25 @@ export default class Loader {
 
         let cursor = this.database.collection(collection).find({ username });
 
-        cursor.toArray().then((info) => {
-            if (info.length > 1) log.debug(`[${collection}] Duplicate entry for ${username}.`);
+        cursor
+            .toArray()
+            .then((info) => {
+                if (info.length > 1)
+                    log.debug(`[${collection}] Duplicate entry for ${username}.`);
 
-            // Return empty array if we can't find any data.
-            if (info.length === 0) return callback();
+                // Return empty array if we can't find any data.
+                if (info.length === 0) return callback();
 
-            // Return the raw data from the database.
-            callback(info as never);
-        });
+                // Return the raw data from the database.
+                callback(info as never);
+            })
+            .catch((error) => {
+                log.error(`[${collection}] Error loading data for ${username}.`);
+                log.error(error);
+
+                // Return empty data so the loading process doesn't hang.
+                callback();
+            });
     }
 
     /**

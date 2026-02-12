@@ -231,7 +231,8 @@ export default class Player extends Character {
         this.userAgent = data.userAgent;
         this.regionsLoaded = data.regionsLoaded || [];
 
-        this.setPoison(data.poison.type, Date.now() - data.poison.remaining);
+        if (data.poison) this.setPoison(data.poison.type, Date.now() - data.poison.remaining);
+
         this.setLastWarp(data.lastWarp);
 
         this.hitPoints.updateHitPoints(data.hitPoints);
@@ -252,8 +253,13 @@ export default class Player extends Character {
         );
 
         // Quests and achievements have to be loaded prior to introducing the player.
-        await this.loadQuests();
-        await this.loadAchievements();
+        try {
+            await this.loadQuests();
+            await this.loadAchievements();
+        } catch (error) {
+            log.error(`Error loading quests/achievements for ${this.username}.`);
+            log.error(error);
+        }
 
         this.intro();
 

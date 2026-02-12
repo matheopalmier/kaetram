@@ -98,6 +98,11 @@ export default class API {
         axios
             .post(url, data)
             .then(({ data }) => callback(data.online))
-            .catch(() => log.error('Could not send `isOnline` to hub.'));
+            .catch(() => {
+                log.error('Could not send `isOnline` to hub.');
+
+                // Assume the player is not online if the hub is unreachable.
+                callback(false);
+            });
     }
 }

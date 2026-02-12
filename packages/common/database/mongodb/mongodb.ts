@@ -108,7 +108,12 @@ export default class MongoDB {
                     player.authenticated = true;
 
                     // Login successful, load player data.
-                    player.load(info);
+                    player.load(info).catch((loadError) => {
+                        log.error(`Failed to load player data for ${player.username}.`);
+                        log.error(loadError);
+
+                        player.connection.reject('error');
+                    });
                 });
             }
         });
