@@ -1,11 +1,12 @@
-import WebSocket from '../websocket';
+import BaseWebSocket from '../websocket';
 import Connection from '../connection';
 
 import log from '@kaetram/common/util/log';
 import config from '@kaetram/common/config';
 import Utils from '@kaetram/common/util/utils';
 import { Modules } from '@kaetram/common/network';
-import { App, DISABLED } from 'uws';
+import uWS from 'uws';
+const { App, DISABLED } = uWS;
 
 import type SocketHandler from '../sockethandler';
 import type { HeaderWebSocket } from '../connection';
@@ -16,9 +17,11 @@ import type {
     us_socket_context_t,
     us_listen_socket
 } from 'uws';
+
+type WebSocket<T> = WS<T>;
 import type { ConnectionInfo } from '@kaetram/common/types/network';
 
-export default class UWS extends WebSocket {
+export default class UWS extends BaseWebSocket {
     public constructor(socketHandler: SocketHandler) {
         super(config.host, config.port, socketHandler);
 
@@ -69,11 +72,11 @@ export default class UWS extends WebSocket {
      * @param socket The socket that the connection will be created for.
      */
 
-    private handleConnection(socket: WS<ConnectionInfo>): void {
+    private handleConnection(socket: WebSocket<any>): void {
         let instance = Utils.createInstance(Modules.EntityType.Player),
             connection = new Connection(instance, socket as HeaderWebSocket);
 
-        socket.getUserData().instance = instance;
+        (socket as any).getUserData().instance = instance;
 
         this.addCallback?.(connection);
     }
@@ -84,8 +87,8 @@ export default class UWS extends WebSocket {
      * @param data Contains buffer data that we convert into a string.
      */
 
-    private handleMessage(socket: WS<ConnectionInfo>, data: ArrayBuffer): void {
-        let connection = this.socketHandler.get(socket.getUserData().instance);
+    private handleMessage(socket: WebSocket<any>, data: ArrayBuffer): void {
+        let connection = this.socketHandler.get((socket as any).getUserData().instance);
 
         // Prevent the server from crashing if the connection is not found.
         if (!connection)
@@ -117,8 +120,8 @@ export default class UWS extends WebSocket {
      * @param socket The socket that we are closing (used to identify the connection).
      */
 
-    private handleClose(socket: WS<ConnectionInfo>): void {
-        let connection = this.socketHandler.get(socket.getUserData().instance);
+    private handleClose(socket: WebSocket<any>): void {
+        let connection = this.socketHandler.get((socket as any).getUserData().instance);
 
         if (!connection)
             return log.error(`No connection found closing ${socket.getUserData().instance}`);

@@ -3,7 +3,8 @@ import Connection from './connection';
 import log from '@kaetram/common/util/log';
 import config from '@kaetram/common/config';
 import Utils from '@kaetram/common/util/utils';
-import { App, DEDICATED_COMPRESSOR_3KB } from 'uws';
+import uWS from 'uws';
+const { App, DEDICATED_COMPRESSOR_3KB } = uWS;
 
 import type { WebSocket, us_listen_socket } from 'uws';
 import type { ConnectionInfo } from '@kaetram/common/types/network';
@@ -56,14 +57,16 @@ export default class Handler {
      * @params socket The socket that has just connected to the hub.
      */
 
-    private handleConnection(socket: WebSocket<ConnectionInfo>): void {
+    private handleConnection(socket: WebSocket<any>): void {
         log.notice(
-            `Received a connection from ${Utils.bufferToAddress(socket.getRemoteAddressAsText())}`
+            `Received a connection from ${Utils.bufferToAddress(
+                (socket as any).getRemoteAddressAsText()
+            )}`
         );
 
         let instance = Utils.createInstance();
 
-        socket.getUserData().instance = instance;
+        (socket as any).getUserData().instance = instance;
 
         // We store the connection in the connections object so that we can use it later.
         this.connections[instance] = new Connection(socket);
@@ -78,8 +81,8 @@ export default class Handler {
      * @param data Contains buffer of the message that was received.
      */
 
-    private handleMessage(socket: WebSocket<ConnectionInfo>, data: ArrayBuffer): void {
-        let connection = this.get(socket.getUserData().instance);
+    private handleMessage(socket: WebSocket<any>, data: ArrayBuffer): void {
+        let connection = this.get((socket as any).getUserData().instance);
 
         if (!connection)
             return log.error(`No connection found for instance ${socket.getUserData().instance}`);
@@ -99,10 +102,10 @@ export default class Handler {
      * @param socket The socket that has just closed.
      */
 
-    private handleClose(socket: WebSocket<ConnectionInfo>): void {
-        this.disconnectCallback?.(socket.getUserData().instance);
+    private handleClose(socket: WebSocket<any>): void {
+        this.disconnectCallback?.((socket as any).getUserData().instance);
 
-        delete this.connections[socket.getUserData().instance];
+        delete this.connections[(socket as any).getUserData().instance];
     }
 
     /**

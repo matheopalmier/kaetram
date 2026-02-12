@@ -4,7 +4,7 @@ import Utils from '@kaetram/common/util/utils';
 import type { WebSocket } from 'uws';
 import type { ConnectionInfo, MessageCallback } from '@kaetram/common/types/network';
 
-export interface HeaderWebSocket extends WebSocket<ConnectionInfo> {
+export interface HeaderWebSocket extends WebSocket<any> {
     remoteAddress: string;
 }
 
@@ -32,7 +32,7 @@ export default class Connection {
     public constructor(public instance: string, private socket: HeaderWebSocket) {
         // Convert the IP address hex string to a readable IP address.
         this.address =
-            socket.remoteAddress || Utils.bufferToAddress(socket.getRemoteAddressAsText());
+            socket.remoteAddress || Utils.bufferToAddress((socket as any).getRemoteAddressAsText());
 
         // Reset the messages per second every second.
         this.rateInterval = setInterval(() => (this.messageRate = 0), 1000); // 1 second
@@ -67,7 +67,7 @@ export default class Connection {
 
     public close(details?: string, force = false): void {
         // Prevent accessing a closed connection.
-        if (!this.closed) this.socket.end();
+        if (!this.closed) (this.socket as any).end();
 
         if (details) log.info(`Connection ${this.address} has closed, reason: ${details}.`);
 
@@ -178,7 +178,7 @@ export default class Connection {
             return log.trace();
         }
 
-        this.socket.send(message);
+        (this.socket as any).send(message);
     }
 
     /**

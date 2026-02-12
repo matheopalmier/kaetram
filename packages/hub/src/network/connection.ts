@@ -4,7 +4,7 @@ import type { ConnectionInfo, MessageCallback } from '@kaetram/common/types/netw
 export default class Connection {
     public messageCallback?: MessageCallback;
 
-    public constructor(public socket: WebSocket<ConnectionInfo>) {}
+    public constructor(public socket: WebSocket<any>) {}
 
     /**
      * Sends a message to the socket connection.
@@ -12,7 +12,7 @@ export default class Connection {
      */
 
     public send(message: string): void {
-        this.socket.send(message);
+        (this.socket as any).send(message);
     }
 
     /**
@@ -20,7 +20,7 @@ export default class Connection {
      */
 
     public close(): void {
-        this.socket.end();
+        (this.socket as any).end();
     }
 
     /**
